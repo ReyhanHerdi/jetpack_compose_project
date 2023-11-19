@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Movies List</string>
+    <string name="scroll_to_top">Scroll to Top</string>
+    <string name="search">Cari film</string>
+</resources>
