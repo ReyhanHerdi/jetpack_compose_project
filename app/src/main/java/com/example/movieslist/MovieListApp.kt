@@ -1,5 +1,7 @@
 package com.example.movieslist
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -46,59 +48,35 @@ import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieslist.data.MoviesRespository
 import androidx.compose.material3.SearchBar
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.movieslist.ui.navigation.Screen
+import com.example.movieslist.ui.screen.HomeScreen
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieListApp(
     modifier: Modifier = Modifier,
-    viewModel: MovieListViewModel = viewModel(factory = ViewModelFactory(MoviesRespository())),
+    navController: NavHostController = rememberNavController(),
 ) {
-    val sortedMovies by viewModel.sortedMovies.collectAsState()
-    val query by viewModel.query
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRute = navBackStackEntry?.destination?.route
 
-    Box(modifier = modifier) {
-        val scope = rememberCoroutineScope()
-        val listState = rememberLazyListState()
-        val showButton: Boolean by remember {
-            derivedStateOf { listState.firstVisibleItemIndex > 0 }
-        }
-
-        LazyColumn(
-            state = listState
-        ) {
-            item {
-                SearchStoryBar(
-                    query = query,
-                    onQueryChange =viewModel::search,
-                    modifier = Modifier.background(MaterialTheme.colorScheme.primary)
-                )
-            }
-            sortedMovies.forEach { (initial,movies) ->
-                items(movies, key = {it.id}) { movie ->
-                    MovieListItem(
-                        name = movie.judul,
-                        tahunRilis = movie.tahunRilis,
-                        posterUrl = movie.poster,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
-
-        }
-
-        AnimatedVisibility(
-            visible = showButton,
-            enter = fadeIn() + slideInVertically(),
-            exit = fadeOut() + slideOutVertically(),
-            modifier = Modifier
-                .padding(bottom = 30.dp)
-                .align(Alignment.BottomCenter)
-        ) {
-            ScrolltoTopButton(
-                onClick = {
-                    scope.launch {
-                        listState.scrollToItem(index = 0)
-                    }
+    NavHost(
+        navController = navController,
+        startDestination = Screen.Home.route,
+        modifier = Modifier
+    ) {
+        composable(Screen.Home.route) {
+            HomeScreen(
+                modifier = Modifier,
+                navigateToDetail = { id ->
+                    navController.navigate(Screen.DetailMovie.createRoute(id))
                 }
             )
         }
@@ -110,99 +88,5 @@ fun MovieListApp(
 fun MovieListAppPreview() {
     MoviesListTheme() {
         MovieListApp()
-    }
-}
-
-@Composable
-fun MovieListItem(
-    name: String,
-    tahunRilis: String,
-    posterUrl: String,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.clickable {  }
-    ) {
-        AsyncImage(
-            model = posterUrl,
-            contentDescription = null,
-            modifier = Modifier
-                .padding(8.dp)
-                .size(130.dp)
-        )
-        Spacer(modifier = Modifier.padding(8.dp))
-        Column {
-            Text(
-                text = name,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                text = tahunRilis,
-                fontSize = 20.sp
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MovieListItemPreview() {
-    MoviesListTheme {
-        MovieListItem(
-            name = "Hackshaw Ridge",
-            tahunRilis = "2016",
-            posterUrl = "",
-        )
-    }
-}
-
-@Composable
-fun ScrolltoTopButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    FilledIconButton(
-        onClick = onClick,
-        modifier = modifier
-    ) {
-        Icon(
-            imageVector = Icons.Filled.KeyboardArrowUp,
-            contentDescription = stringResource(R.string.scroll_to_top)
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SearchStoryBar(
-    query: String,
-    onQueryChange: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    SearchBar(
-        query = query,
-        onQueryChange = onQueryChange,
-        onSearch = {},
-        active = false,
-        onActiveChange = {},
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        },
-        placeholder = {
-            Text(stringResource(R.string.search))
-        },
-        shape = MaterialTheme.shapes.large,
-        modifier = modifier
-            .padding(16.dp)
-            .fillMaxWidth()
-            .heightIn(min = 48.dp)
-    ) {
-
     }
 }

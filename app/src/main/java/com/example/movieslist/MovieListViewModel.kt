@@ -27,16 +27,3 @@ class MovieListViewModel(private val repository: MoviesRespository) : ViewModel(
             .groupBy { it.judul[0] }
     }
 }
-
-@Suppress("UNCHECKED_CAST")
-class ViewModelFactory(private val repository: MoviesRespository) :
-    ViewModelProvider.NewInstanceFactory() {
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MovieListViewModel::class.java)) {
-            return MovieListViewModel(repository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
-    }
-
-}

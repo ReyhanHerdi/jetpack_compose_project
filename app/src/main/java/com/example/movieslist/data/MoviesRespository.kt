@@ -13,4 +13,16 @@ class MoviesRespository {
             it.judul.contains(query, ignoreCase = true)
         }
     }
+
+    companion object {
+        @Volatile
+        private var instance: MoviesRespository? = null
+
+        fun getInstance(): MoviesRespository =
+            instance ?: synchronized(this) {
+                MoviesRespository().apply {
+                    instance = this
+                }
+            }
+    }
 }
