@@ -44,7 +44,9 @@ fun MovieListApp(
 
     Scaffold(
         bottomBar = {
-            BottomBar(navController)
+            if (currentRute != Screen.DetailMovie.route) {
+                BottomBar(navController)
+            }
         },
         modifier = Modifier
     ) { innerPadding ->
