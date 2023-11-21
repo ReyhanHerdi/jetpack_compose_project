@@ -27,8 +27,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.movieslist.ui.navigation.NavigationItem
 import com.example.movieslist.ui.navigation.Screen
+import com.example.movieslist.ui.screen.bookmark.BookmarkScreen
 import com.example.movieslist.ui.screen.detail.DetailScreen
 import com.example.movieslist.ui.screen.home.HomeScreen
+import com.example.movieslist.ui.screen.profile.ProfileScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
@@ -58,6 +60,12 @@ fun MovieListApp(
                         navController.navigate(Screen.DetailMovie.createRoute(id))
                     }
                 )
+            }
+            composable(Screen.Bookmark.route) {
+                BookmarkScreen(modifier = modifier)
+            }
+            composable(Screen.Profile.route) {
+                ProfileScreen(modifier = modifier)
             }
             composable(
                 route = Screen.DetailMovie.route,
