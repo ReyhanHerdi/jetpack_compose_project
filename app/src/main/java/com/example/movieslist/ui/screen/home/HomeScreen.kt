@@ -1,4 +1,4 @@
-package com.example.movieslist.ui.screen
+package com.example.movieslist.ui.screen.home
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
@@ -40,19 +40,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.movieslist.MovieListViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.movieslist.R
 import com.example.movieslist.di.Injection
-import com.example.movieslist.model.Movies
 import com.example.movieslist.ui.ViewModelFactory
 import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
     modifier: Modifier,
-    viewModel: MovieListViewModel = viewModel(
+    viewModel: HomeViewModel = viewModel(
         factory = ViewModelFactory(Injection.provideRespository())
     ),
     navigateToDetail: (String) -> Unit
