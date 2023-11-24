@@ -16,9 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.example.movieslist.ui.theme.MoviesListTheme
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -26,7 +24,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.movieslist.database.FavoriteMovie
 import com.example.movieslist.ui.navigation.NavigationItem
 import com.example.movieslist.ui.navigation.Screen
 import com.example.movieslist.ui.screen.bookmark.BookmarkScreen
@@ -52,7 +49,7 @@ fun MovieListApp(
             }
         },
         modifier = Modifier
-    ) { innerPadding ->
+    ) { _ ->
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
@@ -70,7 +67,6 @@ fun MovieListApp(
             composable(Screen.Bookmark.route) {
                 BookmarkScreen(
                     modifier = Modifier,
-                    favoriteMovie = FavoriteMovie(),
                     navigateToDetail = { id ->
                         navController.navigate(Screen.DetailMovie.createRoute(id))
                     },

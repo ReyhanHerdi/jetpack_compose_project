@@ -1,6 +1,5 @@
 package com.example.movieslist.ui.screen.bookmark
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.movieslist.data.MoviesRespository

@@ -12,8 +12,6 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class MoviesRespository(application: Application) {
-
-    private val movie = mutableListOf<Movies>()
     private val mFavoriteMovieDao: FavoriteMovieDao
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
 

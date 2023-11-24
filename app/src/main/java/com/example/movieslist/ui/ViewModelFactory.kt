@@ -10,6 +10,7 @@ import com.example.movieslist.ui.screen.detail.DetailViewModel
 class ViewModelFactory(private val repository: MoviesRespository) :
     ViewModelProvider.NewInstanceFactory() {
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             return HomeViewModel(repository) as T
