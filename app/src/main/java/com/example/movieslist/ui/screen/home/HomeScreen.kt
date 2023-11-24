@@ -1,5 +1,6 @@
 package com.example.movieslist.ui.screen.home
 
+import android.app.Application
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -50,8 +51,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     modifier: Modifier,
+    application: Application,
     viewModel: HomeViewModel = viewModel(
-        factory = ViewModelFactory(Injection.provideRespository())
+        factory = ViewModelFactory(Injection.provideRespository(application))
     ),
     navigateToDetail: (String) -> Unit
 ) {

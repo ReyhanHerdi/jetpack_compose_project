@@ -1,6 +1,7 @@
 package com.example.movieslist
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.icons.Icons
@@ -25,6 +26,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.movieslist.database.FavoriteMovie
 import com.example.movieslist.ui.navigation.NavigationItem
 import com.example.movieslist.ui.navigation.Screen
 import com.example.movieslist.ui.screen.bookmark.BookmarkScreen
@@ -38,6 +40,7 @@ import com.example.movieslist.ui.screen.profile.ProfileScreen
 fun MovieListApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
+    application: Application
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRute = navBackStackEntry?.destination?.route
@@ -60,11 +63,19 @@ fun MovieListApp(
                     modifier = Modifier,
                     navigateToDetail = { id ->
                         navController.navigate(Screen.DetailMovie.createRoute(id))
-                    }
+                    },
+                    application = application
                 )
             }
             composable(Screen.Bookmark.route) {
-                BookmarkScreen(modifier = modifier)
+                BookmarkScreen(
+                    modifier = Modifier,
+                    favoriteMovie = FavoriteMovie(),
+                    navigateToDetail = { id ->
+                        navController.navigate(Screen.DetailMovie.createRoute(id))
+                    },
+                    application = application
+                )
             }
             composable(Screen.Profile.route) {
                 ProfileScreen(modifier = modifier)
@@ -79,6 +90,7 @@ fun MovieListApp(
                 Log.d("IDJet", id.toString())
                 DetailScreen(
                     id = id.toString(),
+                    application = application
                 )
             }
         }
@@ -130,13 +142,5 @@ private fun BottomBar(
                 }
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MovieListAppPreview() {
-    MoviesListTheme() {
-        MovieListApp()
     }
 }

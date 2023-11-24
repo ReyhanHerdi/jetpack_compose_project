@@ -1,10 +1,12 @@
 package com.example.movieslist.ui.screen.detail
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movieslist.common.UiState
 import com.example.movieslist.data.MoviesRespository
+import com.example.movieslist.database.FavoriteMovie
 import com.example.movieslist.model.Movies
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,4 +26,14 @@ class DetailViewModel(
             Log.d("Check", repository.getMovieById(id).judul)
         }
     }
+
+    fun insertFavoriteMovie(favoriteMovie: FavoriteMovie) {
+        repository.insertFavoriteMovie(favoriteMovie)
+    }
+
+    fun deleteFavoriteMovie(favoriteMovie: FavoriteMovie) {
+        repository.deleteFavoriteMovie(favoriteMovie)
+    }
+
+    fun getFavMovieById(id: String): LiveData<List<FavoriteMovie>> = repository.getFavMovieById(id)
 }
