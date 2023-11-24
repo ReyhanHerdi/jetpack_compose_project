@@ -40,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -47,6 +48,7 @@ import coil.compose.AsyncImage
 import com.example.movieslist.R
 import com.example.movieslist.di.Injection
 import com.example.movieslist.ui.ViewModelFactory
+import com.example.movieslist.ui.theme.MoviesListTheme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -100,8 +102,9 @@ fun HomeScreen(
             enter = fadeIn() + slideInVertically(),
             exit = fadeOut() + slideOutVertically(),
             modifier = Modifier
-                .padding(bottom = 30.dp)
-                .align(Alignment.BottomCenter)
+                .padding(bottom = 96.dp, end = 16.dp)
+                .align(Alignment.BottomEnd)
+                .size(50.dp)
         ) {
             ScrolltoTopButton(
                 onClick = {
@@ -165,6 +168,14 @@ fun ScrolltoTopButton(
             imageVector = Icons.Filled.KeyboardArrowUp,
             contentDescription = stringResource(R.string.scroll_to_top)
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ScrolltoTopBottonPreview() {
+    MoviesListTheme {
+        ScrolltoTopButton(onClick = {  })
     }
 }
 
