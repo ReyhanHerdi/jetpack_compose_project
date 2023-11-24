@@ -127,7 +127,6 @@ fun DetailContent(
                                             tahunRilis,
                                             posterUrl
                                         ))
-                                        Log.d("INSERT", "Berhasil")
                                     } catch (e: Exception) {
                                         Log.d("INSERT", e.toString())
                                     }
@@ -143,7 +142,6 @@ fun DetailContent(
                                 .clickable {
                                     try {
                                         viewModel.deleteFavoriteMovie(FavoriteMovie(id = id))
-                                        Log.d("INSERT", "Berhasil")
                                     } catch (e: Exception) {
                                         Log.d("INSERT", e.toString())
                                     }

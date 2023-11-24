@@ -31,7 +31,6 @@ class MoviesRespository(application: Application) {
     }
 
     fun getMovieById(id: String): Movies {
-        Log.d("IDRepo", id)
         return MoviesData.movies.first {
             it.id == id
         }
